@@ -1,0 +1,29 @@
+
+\begin{tikzpicture}
+\coordinate [label=above:\textcolor{red}{$A$}] (A) at (0.5,4);
+\coordinate [label=left:\textcolor{red}{$B$}] (B) at (-2,0);
+\coordinate [label=right:\textcolor{red}{$C$}] (C) at (2,0);
+\coordinate [label=right:\textcolor{black}{$O$}] (O) at (0,1);
+
+\coordinate [label=below:\textcolor{blue}{$A'$}] (A_1) at (0,0);
+
+\draw[black, thick] (A) -- (B) node(A_B_line)[] {};
+\draw[black, thick] (B) -- (C);
+\draw[black, thick] (C) -- (A);
+\draw[black, thick] (O) -- (A_1);
+\draw[black, thick, dotted] (O) -- (B);
+\draw[black, thick, dotted] (O) -- (C);
+\draw[black, thick] (O) -- (A);
+
+
+\draw[black, thick, dotted] (O) -- ($(A)!(O)!(B)$) node(C_1)[label=left:\textcolor{blue}{$C'$}] {};
+\draw[black, thick, dotted] (O) -- ($(A)!(O)!(C)$) node(B_1)[label=right:\textcolor{blue}{$B'$}] {};
+
+\foreach \point in {A,B,C, O}
+\fill [black,opacity=.8] (\point) circle (2pt);
+
+\foreach \point in {A_1, B_1, C_1}
+\fill [black,opacity=.5] (\point) circle (2pt);
+
+
+\end{tikzpicture}

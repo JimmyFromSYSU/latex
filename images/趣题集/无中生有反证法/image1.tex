@@ -1,0 +1,24 @@
+
+\begin{tikzpicture}
+\node[place, label=center:A]    (A)     at ( -2.5, 0 )     [circle,draw=blue!50,fill=blue!20]  {};
+\node[place, label=center:B]    (B)     at ( -1,   2 )     [circle,draw=blue!50,fill=blue!20]  {}
+    edge [-, red, ultra thick, bend right] (A);
+\node[place, label=center:C]    (C)     at ( 1, 2    )     [circle,draw=blue!50,fill=blue!20]  {}
+    edge [-, blue, ultra thick] (A)
+    edge [-, blue, ultra thick] (B);
+\node[place, label=center:D]    (D)     at ( 2.5, 0  )     [circle,draw=blue!50,fill=blue!20]  {}
+    edge [-, red, ultra thick] (A)
+    edge [-, red, ultra thick] (B)
+    edge [-, blue, ultra thick, bend right] (C);
+\node[place, label=center:E]    (E)     at ( 1, -2   )     [circle,draw=blue!50,fill=blue!20]  {}
+    edge [-, blue, ultra thick] (A)
+    edge [-, blue, ultra thick] (B)
+    edge [-, red, ultra thick] (C)
+    edge [-, blue, ultra thick, bend right] (D);
+\node[place, label=center:F]    (F)     at ( -1, -2  )     [circle,draw=blue!50,fill=blue!20]  {}
+    edge [-, blue, ultra thick, bend left] (A)
+    edge [-, blue, ultra thick] (B)
+    edge [-, red, ultra thick] (C)
+    edge [-, red, ultra thick] (D)
+    edge [-, red, ultra thick] (E);
+\end{tikzpicture}
