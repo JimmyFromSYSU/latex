@@ -1,2 +1,8 @@
 /books/*
+/log/棋牌类游戏AI引擎实现.pdf
+/log/棋牌类游戏AI引擎实现.tex
+/log/*.aux
+/log/*.toc
+/log/*.log
+/log/*.out
 __pycache__/

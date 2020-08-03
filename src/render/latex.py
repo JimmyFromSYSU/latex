@@ -248,9 +248,6 @@ LIST_SETTINGS = r"""
 \setlist{nosep} % or \setlist{noitemsep} to leave space around whole list
 """
 
-PREVIEW_SETTINGS = r"""
-\usepackage[active]{preview}
-"""
 
 # ADD background image
 # The * will make sure that the background picture will only be put on one page.
@@ -282,7 +279,7 @@ def DOCUMENT(
     options: str = DOC_OPTIONS(),
     is_chinese: bool = True,
     is_simple: bool = False,
-    is_preview: bool = False,
+    is_article: bool = False,
     bg_image: Optional[str] = None,
     book_author: Optional[str] = None,
     doc_type: str = "report"  # "article", "book", etc
@@ -307,19 +304,16 @@ def DOCUMENT(
     else:
         type_ = doc_type
 
-    if is_preview:
-        settings.append(PREVIEW_SETTINGS)
-        begin = begin + "\n\\begin{preview}"
-        end = "\\end{preview}\n" + end
+    counter = EMPTY_PAGE
+    title = ""
+    toc = ""
 
     if is_simple:
-        counter = EMPTY_PAGE
-        title = ""
-        toc = ""
         type_ = "standalone"
+    elif is_article:
+        settings.append(PADDING_SETTINGS)
     else:
         counter = "\\setcounter{page}{1}"
-
         title = NEW_LINE(
             [
                 ADD_BG_IMAGE if bg_image else "",

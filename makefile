@@ -24,6 +24,14 @@ image:
 test:
 	python3 test.py --path README.md
 
+temp:
+	python3 create_book.py --path books/棋牌类游戏AI引擎实现/ --name 棋牌类游戏AI引擎实现 --author 南方小智
+	@echo 'xelatex cmd support Chinese'
+	xelatex -output-directory log 棋牌类游戏AI引擎实现.tex
+	@echo 'run twice to build toc correctly'
+	xelatex -output-directory log 棋牌类游戏AI引擎实现.tex
+	open log/棋牌类游戏AI引擎实现.pdf
+
 clean:
 	rm -f log/*.aux
 	rm -f log/*.toc
