@@ -224,16 +224,12 @@ make clean_all  # 清空所有生成文件，包括，log文件，tex文件， p
 
 在Markdown文件中使用特殊字符时需要进行特殊处理，比如添加转义字符$\backslash$
 \begin{lstlisting}[language=Bash]
-_ -> \_   # _ 在Markdown中可用于表示斜体\end{lstlisting}
-
-\begin{itemize}
-\item{ -$>$ *   \# * 在Markdown中可用于表示斜体 }
-\end{itemize}
-
-$ -$>$ \$   \# $ 在Markdown中可用于开始数学表达式模式
-\ -$>$ $\backslash$   \# \ 是特殊的Latex符号
-\begin{lstlisting}[language=Bash]
+_ -> \_   # _ 在Markdown中可用于表示斜体
+* -> \*   # * 在Markdown中可用于表示斜体
+$ -> \$   # $ 在Markdown中可用于开始数学表达式模式
+\ -> \\   # \ 是特殊的Latex符号
 \end{lstlisting}
+
 \section{导入代码文件}
 
 \begin{lstlisting}[language=Bash]

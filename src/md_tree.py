@@ -170,36 +170,42 @@ class Content(Element):
         block_type = None
         while end < len(lines):
             line = lines[end]
-
+            in_block = True if block_type in [BlockType.Math, BlockType.Code] else False
             # TODO: Refactoring to build automation
             # For Quote '> '
             if len(line) >= 1 and line.startswith(">"):
-                if block_type == BlockType.Quote:
+                if block_type == BlockType.Quote or in_block:
                     pass
                 elif end > start:
                     self.blocks.append(Block("\n".join(lines[start:end]), block_type, self.level+1))
                     # print(f"Create Blcok from lines [{start+1}, {end}] with type {block_type}")
                     start = end
-                block_type = BlockType.Quote
+                    block_type = BlockType.Quote
+                else:
+                    block_type = BlockType.Quote
             # For List '* '
             # 2级或多级嵌套List
             elif line.lstrip().startswith("* "):
-                if block_type == BlockType.List:
+                if block_type == BlockType.List or in_block:
                     pass
                 elif end > start:
                     self.blocks.append(Block("\n".join(lines[start:end]), block_type, self.level+1))
                     # print(f"Create Blcok from lines [{start+1}, {end}] with type {block_type}")
                     start = end
-                block_type = BlockType.List
+                    block_type = BlockType.List
+                else:
+                    block_type = BlockType.List
             # For NumberList '1. '
             elif len(line.split(". ")) >= 2 and line.split(". ")[0].isdigit():
-                if block_type == BlockType.NumberList:
+                if block_type == BlockType.NumberList or in_block:
                     pass
                 elif end > start:
                     self.blocks.append(Block("\n".join(lines[start:end]), block_type, self.level+1))
                     # print(f"Create Blcok from lines [{start+1}, {end}] with type {block_type}")
                     start = end
-                block_type = BlockType.NumberList
+                    block_type = BlockType.NumberList
+                else:
+                    block_type = BlockType.NumberList
             # For Math '$$'
             elif len(line) >= 2 and line.startswith("$$"):
                 if block_type == BlockType.Math:
@@ -207,6 +213,8 @@ class Content(Element):
                     # print(f"Create Blcok from lines [{start+1}, {end+1}] with type {block_type}")
                     start = end + 1
                     block_type = None
+                elif in_block:
+                    pass
                 elif end > start:
                     self.blocks.append(Block("\n".join(lines[start:end]), block_type, self.level+1))
                     # print(f"Create Blcok from lines [{start+1}, {end}] with type {block_type}")
@@ -221,6 +229,8 @@ class Content(Element):
                     # print(f"Create Blcok from lines [{start+1}, {end+1}] with type {block_type}")
                     start = end + 1
                     block_type = None
+                elif in_block:
+                    pass
                 elif end > start:
                     self.blocks.append(Block("\n".join(lines[start:end]), block_type, self.level+1))
                     # print(f"Create Blcok from lines [{start+1}, {end}] with type {block_type}")
