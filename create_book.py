@@ -13,6 +13,7 @@ logger = logging.getLogger()
 logging.basicConfig(level=logging.INFO, format=LOGGER_FORMAT)
 
 MAIN_FILE = "MAIN"
+INDEX_FILE = "_INDEX"
 
 def create_by_folder(args) -> str:
     def travel(path: str, level: int = 0) -> str:
@@ -29,6 +30,7 @@ def create_by_folder(args) -> str:
                 content += NEW_LINE([file_content])
 
         str_sections = []
+        sections_titles = []
         for section in sections:
             # ingore this section for now if it's prefix with '_'
             if len(section) > 0 and section[0] in ['_', '.']:
@@ -37,13 +39,33 @@ def create_by_folder(args) -> str:
             if isfile(child_path) and section != MAIN_FILE:
                 file_content = md2tex(read(child_path), level + 1)
                 str_sections.append(SECTION(section, file_content, level))
+                sections_titles.append(section)
             elif isdir(child_path):
                 str_section = NEW_LINE([
                     SECTION(section, "", level),
                     travel(child_path, level=level+1)
                 ])
                 str_sections.append(str_section)
-        str_sections = sorted(str_sections, key=len, reverse=True)
+                sections_titles.append(section)
+
+        # Sort sections by _INDEX file.
+        if INDEX_FILE in sections:
+            child_path = path + "/" + INDEX_FILE
+            titles = read(child_path).split("\n")
+            orders = {}
+            level = 1
+            for title in titles:
+                orders[title] = level
+                level += 1
+            if "*" not in list(orders.keys()):
+                orders["*"] = level
+            section_levels = [
+                orders[title] if title in list(orders.keys()) else orders["*"]
+                for title in sections_titles
+            ]
+            str_sections = [x for _,x in sorted(zip(section_levels, str_sections))]
+        else:
+            str_sections = sorted(str_sections, key=len, reverse=True)
         content += NEW_LINE(str_sections)
         return content
     return travel(args.path)
@@ -71,6 +93,9 @@ def get_args() -> argparse.Namespace:
         "--name", help="The name of the book", required=True
     )
     parser.add_argument(
+        "--output", help="The output folder for the pdf and log files, default='log'", required=False
+    )
+    parser.add_argument(
         "--author", help="The author of the book", required=False
     )
     return parser.parse_args()
@@ -79,8 +104,10 @@ def get_args() -> argparse.Namespace:
 if __name__ == "__main__":
     args = get_args()
     logger.info(args)
-
-    output = f"log/{args.name}.tex"
+    if args.output:
+        output = f"{args.output}/{args.name}.tex"
+    else:
+        output = f"log/{args.name}.tex"
     output_content = ""
     if isdir(args.path):
         output_content = create_by_folder(args)
