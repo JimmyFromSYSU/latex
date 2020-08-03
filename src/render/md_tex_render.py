@@ -73,6 +73,7 @@ class MDTexRender(MDRender):
 
     def render_line(self, line: str) -> str:
         line = line.replace("%", r"\%")
+        line = line.replace(r"\*", "*")
         line = line.replace("#", r"\#")
         line = line.replace("&", r"\&")
         line = line.replace(">", r"$>$")

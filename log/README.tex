@@ -183,9 +183,14 @@ xelatex -output-directory log 趣题集.tex
 \begin{itemize}
 \item{ 支持多层文件夹，每层文件夹对应一个目录级别，比如文件夹内第一层目录每个文件夹名字为每章的名字，第二层目录每个文件夹名字为每节的名字。 }
 \item{ MAIN文件为保留文件名，为该层目录对应章节的导言部分。 }
-\item{ \_INDEX文件为保留文件名，将用于对文件夹（章节）进行排序，目前章节的排列方法是较长的章节放在靠前的位置。 }
+\item{ \_INDEX文件为保留文件名，用于对文件夹（章节）进行排序，目前章节的排列方法是较长的章节放在靠前的位置。 }
 \item{ 名字以“\_”开始的文件夹或者文件会被忽略。 }
 \end{itemize}
+
+
+\_INDEX文件中按顺序列举该层目录的标题，未列举的标题将放在“*”的位置。如果“*”未标注在文件中，则未列举的标题默认排到最后。
+
+\lstinputlisting[language=]{examples/趣题集/_INDEX}
 
 
 \section{生成图片文件}
@@ -219,11 +224,16 @@ make clean_all  # 清空所有生成文件，包括，log文件，tex文件， p
 
 在Markdown文件中使用特殊字符时需要进行特殊处理，比如添加转义字符$\backslash$
 \begin{lstlisting}[language=Bash]
-_ -> \_   # _ 可用于表示斜体
-$ -> \$   # $ 可用于开始数学表达式模式
-\ -> \\   # \ 是特殊的Latex符号
-\end{lstlisting}
+_ -> \_   # _ 在Markdown中可用于表示斜体\end{lstlisting}
 
+\begin{itemize}
+\item{ -$>$ *   \# * 在Markdown中可用于表示斜体 }
+\end{itemize}
+
+$ -$>$ \$   \# $ 在Markdown中可用于开始数学表达式模式
+\ -$>$ $\backslash$   \# \ 是特殊的Latex符号
+\begin{lstlisting}[language=Bash]
+\end{lstlisting}
 \section{导入代码文件}
 
 \begin{lstlisting}[language=Bash]
