@@ -1,7 +1,7 @@
 #!/usr/bin/python
 # -*- coding: UTF-8 -*-
 from src.render.latex import DOCUMENT, ABSTRACT, SECTION, NEW_LINE
-from src.utils.path import get_sections, read, write
+from src.utils.path import read, write, trim_ext
 from src.converter import md2tex
 from src.constants import LOGGER_FORMAT
 from os import listdir
@@ -15,12 +15,16 @@ logging.basicConfig(level=logging.INFO, format=LOGGER_FORMAT)
 MAIN_FILE = "MAIN"
 INDEX_FILE = "_INDEX"
 
+
+def get_title(section: str) -> str:
+    return trim_ext(section)
+
+
 def create_by_folder(args) -> str:
     def travel(path: str, level: int = 0) -> str:
         # TODO: refactoring into a class
         content = ""
-        sections = get_sections(path)
-        sections.sort()
+        sections = listdir(path)
 
         # Add main content in this section before add sub sections.
         if MAIN_FILE in sections:

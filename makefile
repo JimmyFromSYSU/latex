@@ -25,12 +25,12 @@ test:
 	python3 test.py --path README.md
 
 temp:
-	python3 create_book.py --path books/棋牌类游戏AI引擎实现/ --name 棋牌类游戏AI引擎实现 --author 南方小智 --output ignore
+	python3 create_book.py --path books/全栈开发项目实践/ --name 全栈开发项目实践 --author "" --output ignore
 	@echo 'xelatex cmd support Chinese'
-	xelatex -output-directory ignore 棋牌类游戏AI引擎实现.tex
+	xelatex -output-directory ignore 全栈开发项目实践.tex
 	@echo 'run twice to build toc correctly'
-	xelatex -output-directory ignore 棋牌类游戏AI引擎实现.tex
-	open ignore/棋牌类游戏AI引擎实现.pdf
+	xelatex -output-directory ignore 全栈开发项目实践.tex
+	open ignore/全栈开发项目实践.pdf
 
 clean:
 	rm -f log/*.aux
