@@ -94,6 +94,10 @@
 \usepackage{enumitem}
 \setlist{nosep} % or \setlist{noitemsep} to leave space around whole list
 
+
+\usepackage{graphicx}
+\usepackage{caption}
+
 \pagestyle{plain}
 
 \usepackage{ctex}
@@ -125,6 +129,7 @@
 \setcounter{page}{1}
 \tableofcontents
 \newpage
+
 
 
 \chapter{概述}
@@ -268,16 +273,17 @@ make test  # python3 test.py --path README.md
 \begin{itemize}
 \item{ 目前目录最多显示两层标题结构 }
 \item{ 目前最高层目录默认为Chapter，设置level参数使其可配置化 }
+\item{ 图片默认居中，可以考虑配置化。 }
 \end{itemize}
  }
 \item{ 目前Markdown解析器仍然有许多Markdown基本语法并不支持，需要：
 \begin{itemize}
 \item{ 支持行内斜体，下划线等。 }
 \item{ 支持行内代码。 }
-\item{ 支持一般图片格式的导入 }
-\item{ [Done] 支持嵌套List
+\item{ [Done] 支持一般图片格式的导入。 }
+\item{ [Done] 支持嵌套List。
 \begin{itemize}
-\item{ 测试3层嵌套 }
+\item{ 测试3层嵌套。 }
 \end{itemize}
  }
 \item{ 支持表格 }
@@ -290,6 +296,7 @@ make test  # python3 test.py --path README.md
  }
 \item{ 支持更多的Features：
 \begin{itemize}
+\item{ 使用folder模式的时候，兼容.md等后缀。 }
 \item{ 添加页面背景水印，这样可以防止发布的材料被盗版使用。 }
 \item{ 添加程序辅助画图（特别是制作复杂的各类数学图片）。 }
 \item{ 添加作者介绍。 }
@@ -303,5 +310,9 @@ make test  # python3 test.py --path README.md
  }
 \end{itemize}
 
+
+\begin{center}\begin{figure} \centering \includegraphics[]
+{images/README/qrcode_for_haqiandahulu_m_size.jpg}\caption*{扫码支持作者}
+\end{figure} \end{center}
 
 \end{document}

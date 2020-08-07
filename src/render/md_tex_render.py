@@ -50,6 +50,13 @@ class MDTexRender(MDRender):
     def build_inline_link(self, title: str, link: str) -> str:
         return f"\\href{{{link}}}{{{title}}}"
 
+    def build_inline_image(self, title: str, link: str) -> str:
+        # width=\linewidth
+        begin = r"\begin{center}\begin{figure} \centering \includegraphics[]"
+        content = f"{{{link}}}\\caption*{{{title}}}"  # use * to remove label.
+        end = r"\end{figure} \end{center}"
+        return f"{begin}\n{content}\n{end}"
+
     def build_inline_bold(self, content: str) -> str:
         return f"\\textbf{{\\textcolor{{Firebrick}}{{{content}}}}}"
 

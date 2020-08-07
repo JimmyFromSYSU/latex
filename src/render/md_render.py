@@ -14,6 +14,10 @@ class MDRender():
     def __init__(self, level: int = 0):
         self.level = level
         self.render_line_configs = {
+            InLineType.Image: {
+                'pattern_str': r"\!\[(.*?)\]\((.*?)\)",
+                'group_num': 2,
+            },
             InLineType.Link: {
                 'pattern_str': r"\[(.*?)\]\((.*?)\)",
                 'group_num': 2,
@@ -41,6 +45,10 @@ class MDRender():
         pass
 
     @abc.abstractmethod
+    def build_inline_image(self, title: str, link: str) -> str:
+        pass
+
+    @abc.abstractmethod
     def build_inline_bold(self, content: str) -> str:
         pass
 
@@ -49,7 +57,14 @@ class MDRender():
         pass
 
     def build_inline_new_pattern(self, match, inline_type: InLineType) -> str:
-        if inline_type == InLineType.Link:
+        # Image must be before Link, otherwise Image will be treat as Link because the format
+        # Image: ![]()
+        # Link: []()
+        if inline_type == InLineType.Image:
+            title = match.group(1)
+            link = match.group(2)
+            return self.build_inline_image(title, link)
+        elif inline_type == InLineType.Link:
             title = match.group(1)
             link = match.group(2)
             return self.build_inline_link(title, link)

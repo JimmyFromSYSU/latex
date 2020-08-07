@@ -166,7 +166,7 @@ FONT_SETTINGS = """
 # https://tex.stackexchange.com/questions/29593/shift-title-and-author-text-up
 def TITLE_SETTINGS(book_title: str, author: Optional[str], bg_image: Optional[str]) -> str:
     if bg_image:
-        bg_image_setting = f"""
+        bg_image_settings = f"""
             \\usepackage{{eso-pic}}
             \\newcommand\\BackgroundPic{{%
             \\put(0,0){{%
@@ -179,7 +179,7 @@ def TITLE_SETTINGS(book_title: str, author: Optional[str], bg_image: Optional[st
             }}}}}}
         """
     else:
-        bg_image_setting = ""
+        bg_image_settings = ""
 
     author = author if author else ""
 
@@ -189,7 +189,7 @@ def TITLE_SETTINGS(book_title: str, author: Optional[str], bg_image: Optional[st
         \\title{{\\fontsize{{40}}{{20}} \\textbf{{\\textcolor{{red}}{{\kaishu {book_title}}}}}}}
         \\author{{\\textcolor{{red}}{{{author}}}}}
         \\date{{\\textcolor{{red}}{{\\today}}}}
-        {bg_image_setting}
+        {bg_image_settings}
         """
     )
 
@@ -248,6 +248,11 @@ LIST_SETTINGS = r"""
 \setlist{nosep} % or \setlist{noitemsep} to leave space around whole list
 """
 
+# https://tex.stackexchange.com/questions/21795/how-to-remove-figure-label
+IMAGE_SETTINGS = r"""
+\usepackage{graphicx}
+\usepackage{caption}
+"""
 
 # ADD background image
 # The * will make sure that the background picture will only be put on one page.
@@ -295,6 +300,7 @@ def DOCUMENT(
     settings.append(PGF_SETTINGS)
     settings.append(BLOCK_QUOTE_SETTINGS)
     settings.append(LIST_SETTINGS)
+    settings.append(IMAGE_SETTINGS)
     settings.append(PLAIN_PAGE)
 
     if is_chinese:

@@ -1,4 +1,5 @@
 
+
 ## 概述
 
 
@@ -123,12 +124,13 @@ make test  # python3 test.py --path README.md
 * 目前很多latex设置都是Hard Code的，应当将这些设置变成可配置的：
     * 目前目录最多显示两层标题结构
     * 目前最高层目录默认为Chapter，设置level参数使其可配置化
+    * 图片默认居中，可以考虑配置化。
 * 目前Markdown解析器仍然有许多Markdown基本语法并不支持，需要：
     * 支持行内斜体，下划线等。
     * 支持行内代码。
-    * 支持一般图片格式的导入
-    * [Done] 支持嵌套List
-        * 测试3层嵌套
+    * [Done] 支持一般图片格式的导入。
+    * [Done] 支持嵌套List。
+        * 测试3层嵌套。
     * 支持表格
 * 目前Latex渲染器仍然有一些Latex用法支持不够，需要：
     * 支持更多类似\$，<，>等latex特殊字符。
@@ -140,3 +142,5 @@ make test  # python3 test.py --path README.md
     * 添加html和word渲染器。
 * Better Engineering：
     * md\_tree的Parser主体可以用自动机的方式实现，从而减少if/else的判断和重复代码片。
+
+![扫码支持作者](images/README/qrcode_for_haqiandahulu_m_size.jpg)

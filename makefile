@@ -24,6 +24,9 @@ image:
 test:
 	python3 test.py --path README.md
 
+git:
+	git push https://github.com/JimmyFromSYSU/latex.git master
+
 temp:
 	python3 create_book.py --path books/全栈开发项目实践/ --name 全栈开发项目实践 --author "" --output ignore
 	@echo 'xelatex cmd support Chinese'
