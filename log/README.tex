@@ -1,4 +1,4 @@
-\documentclass[12pt, letterpaper]{ctexrep}
+\documentclass[export, 12pt, letterpaper]{ctexrep}
 
 \usepackage{titling}
 \usepackage{standalone}
@@ -96,7 +96,9 @@
 
 
 \usepackage{graphicx}
+\usepackage{adjustbox}
 \usepackage{caption}
+\usepackage{float}
 
 \pagestyle{plain}
 
@@ -238,7 +240,7 @@ $ -> \$   # $ 在Markdown中可用于开始数学表达式模式
 \section{导入代码文件}
 
 \begin{lstlisting}[language=Bash]
-{{create_book.py}}[code:Python] # 导入代码文件
+{{create_book.py}}[code:Python] # 导入Python格式的代码文件
 \end{lstlisting}
 
 \lstinputlisting[language=Python]{create_book.py}
@@ -253,12 +255,37 @@ $ -> \$   # $ 在Markdown中可用于开始数学表达式模式
 \input{images/趣题集/三角形悖论/image1.tex}
 \end{center}
 
-\section{Markdown转化器}
+
+\section{导入dot格式的图片文件}
+
+\begin{shadedquotation}
+\noindent
+注意：需要安装\href{https://graphviz.org/download/}{Graphviz}。
+\end{shadedquotation}
+
+
+导入的dot文件会通过dot命令转化为eps格式，并作为图片导入到tex文件中。dot的简单用法可以参照\href{https://graphviz.org/documentation/}{GraphViz Documentation}。
+
+\begin{lstlisting}[language=Bash]
+{{images/README/image0.dot}}[dot:测试dot] # 导入dot格式/graphviz语法的图片文件，并用“测试dot”作为标题。
+\end{lstlisting}
+
+\begin{center}\begin{figure}[H] \centering \includegraphics[max size={\textwidth}{\textheight},keepaspectratio]
+{images/README/image0.dot.eps}\caption*{测试dot}
+\end{figure} \end{center}
+
+
+\section{Markdown的解析和渲染}
 该系统自带一个Markdown解析器，会将Markdown文本转化为一棵语法树。使用如下命令可以打印出本Readme文档的语法树：
 
 \begin{lstlisting}[language=Bash]
 make test  # python3 test.py --path README.md
 \end{lstlisting}
+
+Markdown语法树的解析遵循如图的树状结构。从最顶端的Document到最底端的Line，而inline部分的语法则较为简单，将由渲染器进行解析。
+\begin{center}\begin{figure}[H] \centering \includegraphics[max size={\textwidth}{\textheight},keepaspectratio]
+{images/README/image1.dot.eps}\caption*{Markdown语法树}
+\end{figure} \end{center}
 
 通过渲染器，可以将Markdown渲染成tex，html，word等格式。只需要继承MDRender，实现对应的抽象方法即可添加新的渲染器，比如src/render/md\_tex\_render.py。
 
@@ -311,7 +338,7 @@ make test  # python3 test.py --path README.md
 \end{itemize}
 
 
-\begin{center}\begin{figure} \centering \includegraphics[]
+\begin{center}\begin{figure}[H] \centering \includegraphics[max size={\textwidth}{\textheight},keepaspectratio]
 {images/README/qrcode_for_haqiandahulu_m_size.jpg}\caption*{扫码支持作者}
 \end{figure} \end{center}
 

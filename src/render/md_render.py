@@ -53,7 +53,7 @@ class MDRender():
         pass
 
     @abc.abstractmethod
-    def build_inline_include(self, content: str, type_: IncludeType) -> str:
+    def build_inline_include(self, path: str, type_: IncludeType) -> str:
         pass
 
     def build_inline_new_pattern(self, match, inline_type: InLineType) -> str:
@@ -72,7 +72,7 @@ class MDRender():
             content = match.group(1)
             return self.build_inline_bold(content)
         elif inline_type == InLineType.Include:
-            content = match.group(1)
+            path = match.group(1)
             setting = match.group(2)
             if len(setting.split(":", 1)) == 2:
                 type_ = setting.split(":", 1)[0]
@@ -80,7 +80,7 @@ class MDRender():
             else:
                 type_ = setting
                 config = ""
-            return self.build_inline_include(content, type_, config)
+            return self.build_inline_include(path, type_, config)
         return ""
 
     def render_line_with(self, line, inline_type, config) -> str:

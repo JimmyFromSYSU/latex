@@ -2,8 +2,14 @@
 # -*- coding: UTF-8 -*-
 from .latex import SECTION_TITLE, BLOCK_QUOTE, LIST, NUMBER_LIST, BLOCK_MATH, BLOCK_CODE
 from typing import List
-from .constants import ListType, IncludeType
+from .constants import ListType, IncludeType, DOT_IMAGE_TYPE
 from .md_render import MDRender
+import os
+
+from ..constants import LOGGER_FORMAT
+import logging
+logger = logging.getLogger()
+logging.basicConfig(level=logging.INFO, format=LOGGER_FORMAT)
 
 
 # TODO: move to md_render, now it's only used by latex render
@@ -52,7 +58,8 @@ class MDTexRender(MDRender):
 
     def build_inline_image(self, title: str, link: str) -> str:
         # width=\linewidth
-        begin = r"\begin{center}\begin{figure} \centering \includegraphics[]"
+        # [H]取消图片默认置顶: https://blog.csdn.net/ymjiang820/article/details/50474586
+        begin = r"\begin{center}\begin{figure}[H] \centering \includegraphics[max size={\textwidth}{\textheight},keepaspectratio]"
         content = f"{{{link}}}\\caption*{{{title}}}"  # use * to remove label.
         end = r"\end{figure} \end{center}"
         return f"{begin}\n{content}\n{end}"
@@ -60,15 +67,28 @@ class MDTexRender(MDRender):
     def build_inline_bold(self, content: str) -> str:
         return f"\\textbf{{\\textcolor{{Firebrick}}{{{content}}}}}"
 
-    def build_inline_include(self, content: str, type_: IncludeType, config: str="") -> str:
+    def build_inline_include(self, path: str, type_: IncludeType, config: str="") -> str:
         if type_ == IncludeType.Image:
             begin = r"\begin{center}"
             end = r"\end{center}"
-            return f"{begin}\n\\input{{{content}}}\n{end}"
+            return f"{begin}\n\\input{{{path}}}\n{end}"
+        elif type_ == IncludeType.Dot:
+            img_path = f"{path}.{DOT_IMAGE_TYPE}"
+            cmd = f"dot -Teps {path} > {img_path}"
+
+            logger.info(f"Creating eps image file for {path}")
+            logger.info(f"cmd: {cmd}")
+
+            stream = os.popen(cmd)
+            output = stream.read()
+            logger.info(f"Result: {output.strip()}")
+
+            title = config
+            return self.build_inline_image(title, img_path)
         elif type_ == IncludeType.Code:
-            return f"\\lstinputlisting[language={config}]{{{content}}}"
+            return f"\\lstinputlisting[language={config}]{{{path}}}"
         else:
-            return f"\\input{{{content}}}"
+            return f"\\input{{{path}}}"
 
     def render_list(self, items: List[str], type_: ListType=ListType.Normal) -> str:
         if type_ == ListType.Number:

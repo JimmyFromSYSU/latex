@@ -30,7 +30,8 @@ def DOC_OPTIONS(
     main_font: str = "12pt",
     paper_size: str = "letterpaper", # a4paper, a5paper, b5paper, executivepaper, and legalpaper
 ) -> str:
-    items = []
+    # export: https://ipfs-sec.stackexchange.cloudflare-ipfs.com/tex/A/question/263869.html
+    items = ["export"]
     if main_font:
         items.append(main_font)
     if paper_size:
@@ -248,10 +249,13 @@ LIST_SETTINGS = r"""
 \setlist{nosep} % or \setlist{noitemsep} to leave space around whole list
 """
 
-# https://tex.stackexchange.com/questions/21795/how-to-remove-figure-label
+# 去除图片标题中的前缀，如Fig.1: https://tex.stackexchange.com/questions/21795/how-to-remove-figure-label
+# float(取消图片默认置顶): https://blog.csdn.net/ymjiang820/article/details/50474586
 IMAGE_SETTINGS = r"""
 \usepackage{graphicx}
+\usepackage{adjustbox}
 \usepackage{caption}
+\usepackage{float}
 """
 
 # ADD background image

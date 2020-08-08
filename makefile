@@ -9,9 +9,9 @@ all:
 readme:
 	python3 create_book.py --path README.md --name README --author 南方小智
 	@echo 'xelatex cmd support Chinese'
-	xelatex -output-directory log README.tex
+	xelatex -shell-escape -output-directory log README.tex
 	@echo 'run twice to build toc correctly'
-	xelatex -output-directory log README.tex
+	xelatex -shell-escape -output-directory log README.tex
 	open log/README.pdf
 
 image:

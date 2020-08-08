@@ -5,7 +5,6 @@ from os import listdir
 from os.path import isfile, join
 
 def read(file: str) -> str:
-    print(file)
     result = ""
     with open(file, 'r') as input_file:
         result = input_file.read()

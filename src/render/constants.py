@@ -19,3 +19,7 @@ class IncludeType():
     Text = "text"
     Image = "image"  # tex file image
     Code = "code"
+    Dot = "dot" # https://graphviz.org/doc/info/lang.html
+
+
+DOT_IMAGE_TYPE = "eps" # png/pdf/jpg won't create bounding box

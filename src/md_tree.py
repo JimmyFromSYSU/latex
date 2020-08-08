@@ -12,7 +12,7 @@ from .render.constants import ListType
 # Title = Text, Level
 # Content = List[Block]
 # Block = List[Line], BlockType
-# BlockType = Paragraph | List | Quote | Math ｜ Code ｜ Table
+# BlockType = Text | List | Quote | Math ｜ Code ｜ Table
 # Line (Inline change):
 # * 链接（蓝色）
 # * 特殊字符，如%
