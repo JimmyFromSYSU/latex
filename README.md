@@ -157,6 +157,9 @@ Markdown语法树的解析遵循如图的树状结构。从最顶端的Document�
     * 添加程序辅助画图（特别是制作复杂的各类数学图片）。
     * 添加作者介绍。
     * 添加html和word渲染器。
+    * 支持latex画思维导图。
+* BUG:
+    * tex图片嵌入应该像dot图片嵌入一样支持设置标题，如[image:title]。
 * Better Engineering：
     * md\_tree的Parser主体可以用自动机的方式实现，从而减少if/else的判断和重复代码片。
 
