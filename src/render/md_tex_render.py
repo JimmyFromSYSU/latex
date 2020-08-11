@@ -106,6 +106,7 @@ class MDTexRender(MDRender):
         line = line.replace(">", r"$>$")
         line = line.replace("<", r"$<$")
         line = line.replace("≈", r"$\approx$")
+        line = line.replace("~", r"$\~{}$")
         line = line.replace("\\\\", r"$\backslash$")
         line = super().render_line(line)
         return line

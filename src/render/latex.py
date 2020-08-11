@@ -317,7 +317,9 @@ def DOCUMENT(
     counter = EMPTY_PAGE
     title = ""
     toc = ""
-
+    print(f"is_article = {is_article}")
+    print(f"type_ = {type_}")
+    print(f"doc_type = {doc_type}")
     if is_simple:
         type_ = "standalone"
     elif is_article:

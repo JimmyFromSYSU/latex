@@ -14,6 +14,14 @@ readme:
 	xelatex -shell-escape -output-directory log README.tex
 	open log/README.pdf
 
+article:
+	python3 create_book.py --path books/每日规划 --name 每日规划 --author 南方小智 --is_article --output ignore
+	@echo 'xelatex cmd support Chinese'
+	xelatex -output-directory ignore 每日规划.tex
+	@echo 'run twice to build toc correctly'
+	xelatex -output-directory ignore 每日规划.tex
+	open ignore/每日规划.pdf
+
 image:
 	python3 create_book.py --path images/趣题集/三角形悖论/image0.tex --name 三角形 --simple
 	xelatex -output-directory log 三角形.tex

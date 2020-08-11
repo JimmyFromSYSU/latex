@@ -77,7 +77,11 @@ def create_by_folder(args) -> str:
 
 
 def create_by_file(args) -> str:
-    content = md2tex(read(args.path), level=0)
+    if args.is_article:
+        level = 2
+    else:
+        level = 0
+    content = md2tex(read(args.path), level=level)
     return content
 
 
@@ -92,6 +96,9 @@ def get_args() -> argparse.Namespace:
     )
     parser.add_argument(
         "--simple", help="Output a simple standalone pdf", required=False, action="store_true"
+    )
+    parser.add_argument(
+        "--is_article", help="Output an article rather than a book (ignore title, toc, etc)", required=False, action="store_true"
     )
     parser.add_argument(
         "--name", help="The name of the book", required=True
@@ -126,5 +133,6 @@ if __name__ == "__main__":
             bg_image=args.bg,
             book_author=args.author,
             is_simple=args.simple,
+            is_article=args.is_article,
         )
     )
