@@ -1,6 +1,7 @@
 #!/usr/bin/python
 # -*- coding: UTF-8 -*-
 import abc
+import re
 from .render.md_render import MDRender
 from .constants import BlockType
 from .render.constants import ListType
@@ -330,7 +331,13 @@ class MDDocument(Element):
     def clear(self):
         self.sections = []
 
+    def rm_comments(self):
+        self.text = re.sub("(<!--.*?-->)", "", self.text, flags=re.DOTALL)
+
     def parse(self):
+        # comments has highest priority to remove.
+        self.rm_comments()
+
         has_main = True # has main text before the first title section
         if self.text.startswith("#"):
             has_main = False

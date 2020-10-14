@@ -1,6 +1,6 @@
 #!/usr/bin/python
 # -*- coding: UTF-8 -*-
-from typing import List, Optional
+from typing import List, Optional, Dict
 
 
 CLEAR_PAGE = "\\clearpage\n"
@@ -71,20 +71,11 @@ TOC_SETTINGS = r"""
     colorlinks=true,
     linkcolor=DarkBlue,
     urlcolor=blue,
+    filecolor=DarkBlue,
     linktoc=all
 }
 \setcounter{tocdepth}{1}
 """
-
-PADDING_SETTINGS = """
-\\usepackage[
-    left=1.0in,
-    right=1.0in,
-    top=1.5in,
-    bottom=1.5in,
-]{geometry}
-"""
-
 
 # math background color: https://tex.stackexchange.com/questions/75129/boxed-tikz-and-colored-equation-background
 # \\usepackage{amsmath}
@@ -156,6 +147,7 @@ CHINESE_SETTINGS = r"""
 \usepackage{xeCJK}
 \xeCJKsetup{CJKmath=true}
 """
+
 
 FONT_SETTINGS = """
 """
@@ -283,17 +275,21 @@ DOC_TYPES = {
 
 
 def DOCUMENT(
+    config: Dict[str, str],
     book_title: str = "",
     content: str = "",
-    options: str = DOC_OPTIONS(),
     is_chinese: bool = True,
     is_simple: bool = False,
     is_article: bool = False,
     bg_image: Optional[str] = None,
     book_author: Optional[str] = None,
-    doc_type: str = "report"  # "article", "book", etc
+    doc_type: str = "report",  # "article", "book", etc
 ) -> str:
     settings = []
+    options = DOC_OPTIONS(main_font=config['MAIN_FONT'])
+
+    PADDING_SETTINGS = config['PADDING_SETTINGS']
+    SECTION_SETTINGS = config['SECTION_SETTINGS']
 
     settings.append(COMMON_SETTINGS)
     settings.append(COLOR_SETTINGS)
@@ -306,6 +302,7 @@ def DOCUMENT(
     settings.append(LIST_SETTINGS)
     settings.append(IMAGE_SETTINGS)
     settings.append(PLAIN_PAGE)
+    settings.append(SECTION_SETTINGS)
 
     if is_chinese:
         assert(doc_type in list(DOC_TYPES.keys()))
@@ -317,9 +314,7 @@ def DOCUMENT(
     counter = EMPTY_PAGE
     title = ""
     toc = ""
-    print(f"is_article = {is_article}")
-    print(f"type_ = {type_}")
-    print(f"doc_type = {doc_type}")
+
     if is_simple:
         type_ = "standalone"
     elif is_article:

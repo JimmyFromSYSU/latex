@@ -4,6 +4,7 @@ from src.render.latex import DOCUMENT, ABSTRACT, SECTION, NEW_LINE
 from src.utils.path import read, write, trim_ext
 from src.converter import md2tex
 from src.constants import LOGGER_FORMAT
+from src.config import get_config
 from os import listdir
 from os.path import isfile, isdir
 import markdown
@@ -77,11 +78,7 @@ def create_by_folder(args) -> str:
 
 
 def create_by_file(args) -> str:
-    if args.is_article:
-        level = 2
-    else:
-        level = 0
-    content = md2tex(read(args.path), level=level)
+    content = md2tex(read(args.path), level=args.level)
     return content
 
 
@@ -101,10 +98,16 @@ def get_args() -> argparse.Namespace:
         "--is_article", help="Output an article rather than a book (ignore title, toc, etc)", required=False, action="store_true"
     )
     parser.add_argument(
+        "--level", help="The first level of the book section, default to 0: chapter", default=0, required=False, type=int,
+    )
+    parser.add_argument(
+        "--config", help="The config name of the book", required=False, default='DEFAULT',
+    )
+    parser.add_argument(
         "--name", help="The name of the book", required=True
     )
     parser.add_argument(
-        "--output", help="The output folder for the pdf and log files, default='log'", required=False
+        "--output", help="The output folder for the pdf and log files, default='log'", required=False, default='log',
     )
     parser.add_argument(
         "--author", help="The author of the book", required=False
@@ -117,8 +120,6 @@ if __name__ == "__main__":
     logger.info(args)
     if args.output:
         output = f"{args.output}/{args.name}.tex"
-    else:
-        output = f"log/{args.name}.tex"
     output_content = ""
     if isdir(args.path):
         output_content = create_by_folder(args)
@@ -128,8 +129,9 @@ if __name__ == "__main__":
     write(
         output,
         DOCUMENT(
-            args.name,
-            output_content,
+            config=get_config(args.config),
+            book_title=args.name,
+            content=output_content,
             bg_image=args.bg,
             book_author=args.author,
             is_simple=args.simple,
