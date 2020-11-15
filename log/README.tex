@@ -21,6 +21,7 @@
     colorlinks=true,
     linkcolor=DarkBlue,
     urlcolor=blue,
+    filecolor=DarkBlue,
     linktoc=all
 }
 \setcounter{tocdepth}{1}
@@ -31,6 +32,7 @@
 \usepackage{tikz}
 \usepackage{verbatim}
 \usetikzlibrary{calc}
+\usetikzlibrary{shapes.geometric}
 
 % put color to \boxed math command
 \newcommand*{\boxcolor}{Peru}
@@ -101,6 +103,15 @@
 \usepackage{float}
 
 \pagestyle{plain}
+
+        
+
+\usepackage{booktabs, multirow} % for borders and merged ranges
+\usepackage{soul}% for underlines
+%\usepackage[table]{xcolor} % for cell colors
+\usepackage{changepage,threeparttable} % for wide tables
+\usepackage{longtable} % table for mutiple pages
+
 
 \usepackage{ctex}
 \usepackage{xeCJK}
@@ -255,6 +266,28 @@ $ -> \$   # $ 在Markdown中可用于开始数学表达式模式
 \input{images/趣题集/三角形悖论/image1.tex}
 \end{center}
 
+\section{导入目标文件格式的文件}
+
+有时Markdown不支持所有的语法，比如复杂的latex表格，这个时候可以在markdown文档中导入一段纯文本，渲染器会直接导入纯文本并不做附加处理。
+
+\begin{lstlisting}[language=Bash]
+ # 导入tex格式的table文件
+{{tables/table1.tex}}[text]
+
+ # longtable用于多页表格
+ # longtable不能嵌套在table环境内
+ # ｜ 代表列分隔线，0.2代表该列占宽度的20%。
+\begin{longtable}{p{0.2\textwidth} | p{0.25\textwidth} p{0.55\textwidth}}
+\toprule
+\end{longtable}
+
+ # hline行分隔线，cline部分行分隔线
+\hline
+\cline{2-3}
+\end{lstlisting}
+
+\input{tables/table1.tex}
+
 
 \section{导入dot格式的图片文件}
 
@@ -296,13 +329,14 @@ Markdown语法树的解析遵循如图的树状结构。从最顶端的Document�
 
 
 \begin{itemize}
-\item{ 目前很多latex设置都是Hard Code的，应当将这些设置变成可配置的：
+\item{ [WIP] 目前很多latex设置都是Hard Code的，应当将这些设置变成可配置的：
 \begin{itemize}
-\item{ 目前目录最多显示两层标题结构 }
 \item{ 目前最高层目录默认为Chapter，设置level参数使其可配置化 }
-\item{ 图片默认居中，可以考虑配置化。 }
+\item{ 可以设置加粗字体颜色和链接颜色。 }
 \end{itemize}
  }
+\item{ 支持表格，以及merge cell。 }
+\item{ 代码块内无法在行首使用\#，会被解析成section。 }
 \item{ 目前Markdown解析器仍然有许多Markdown基本语法并不支持，需要：
 \begin{itemize}
 \item{ 支持行内斜体，下划线等。 }

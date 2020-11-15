@@ -56,6 +56,14 @@ COMMON_SETTINGS = r"""
 \usepackage{fontenc}
 """
 
+TABLE_SETTINGS = r"""
+\usepackage{booktabs, multirow} % for borders and merged ranges
+\usepackage{soul}% for underlines
+%\usepackage[table]{xcolor} % for cell colors
+\usepackage{changepage,threeparttable} % for wide tables
+\usepackage{longtable} % table for mutiple pages
+"""
+
 # TODO: add USE_PAKAGE function
 # \part and \chapter are only available in report and book document classes.
 # -1 \part{part}
@@ -86,6 +94,7 @@ MATH_SETTINGS = r"""
 \usepackage{tikz}
 \usepackage{verbatim}
 \usetikzlibrary{calc}
+\usetikzlibrary{shapes.geometric}
 
 % put color to \boxed math command
 \newcommand*{\boxcolor}{Peru}
@@ -303,6 +312,7 @@ def DOCUMENT(
     settings.append(IMAGE_SETTINGS)
     settings.append(PLAIN_PAGE)
     settings.append(SECTION_SETTINGS)
+    settings.append(TABLE_SETTINGS)
 
     if is_chinese:
         assert(doc_type in list(DOC_TYPES.keys()))

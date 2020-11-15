@@ -1,0 +1,167 @@
+\documentclass[export, 12pt, letterpaper]{ctexrep}
+
+\usepackage{titling}
+\usepackage{standalone}
+\usepackage{fontenc}
+
+
+\usepackage[x11names]{xcolor}
+\definecolor{SaddleBrown}{rgb}{0.55, 0.27, 0.07}
+\definecolor{IndianRed}{rgb}{0.80, 0.36, 0.36}
+\definecolor{Firebrick}{rgb}{0.70, 0.13, 0.13}
+\definecolor{DarkBlue}{rgb}{0, 0, 0.55}
+\definecolor{Goldenrod}{rgb}{0.85, 0.65, 0.13}
+\definecolor{Peru}{rgb}{0.85, 0.65, 0.13}
+
+
+
+
+\usepackage{hyperref}
+\hypersetup{
+    colorlinks=true,
+    linkcolor=DarkBlue,
+    urlcolor=blue,
+    filecolor=DarkBlue,
+    linktoc=all
+}
+\setcounter{tocdepth}{1}
+
+
+\usepackage{mathtools}
+\usepackage{amsmath}
+\usepackage{tikz}
+\usepackage{verbatim}
+\usetikzlibrary{calc}
+\usetikzlibrary{shapes.geometric}
+
+% put color to \boxed math command
+\newcommand*{\boxcolor}{Peru}
+\makeatletter
+\renewcommand{\boxed}[1]{\textcolor{\boxcolor}{%
+\tikz[baseline={([yshift=-1ex]current bounding box.center)}] \node [rectangle, minimum width=1ex,rounded corners,draw] {\normalcolor\m@th$\displaystyle#1$};}}
+\makeatother
+
+
+\usepackage{listings}
+
+\definecolor{codegreen}{rgb}{0,0.6,0}
+\definecolor{codegray}{rgb}{0.5,0.5,0.5}
+\definecolor{codepurple}{rgb}{0.58,0,0.82}
+\definecolor{backcolour}{rgb}{0.95,0.95,0.92}
+
+\lstdefinestyle{mystyle}{
+    backgroundcolor=\color{backcolour},
+    commentstyle=\color{codegreen},
+    keywordstyle=\color{magenta},
+    numberstyle=\tiny\color{codegray},
+    stringstyle=\color{codepurple},
+    basicstyle=\ttfamily\footnotesize,
+    breakatwhitespace=false,
+    breaklines=true,
+    captionpos=b,
+    keepspaces=true,
+    numbers=left,
+    numbersep=5pt,
+    showspaces=false,
+    showstringspaces=false,
+    showtabs=false,
+    tabsize=2
+}
+
+\lstset{style=mystyle}
+
+
+\usetikzlibrary{positioning}
+\usetikzlibrary{petri} % LATEX and plain TEX
+\usetikzlibrary[petri] % ConTEXt
+\usepackage{pgfplots}
+\pgfplotsset{compat=1.13}
+
+
+\usepackage{framed}
+\usepackage{quoting}
+
+\colorlet{shadecolor}{LightSteelBlue1}
+\usepackage{lipsum}
+\newenvironment{shadedquotation}
+ {\begin{shaded*}
+  \quoting[leftmargin=5pt, rightmargin=5pt, vskip=0pt]
+ }
+ {\endquoting
+ \end{shaded*}
+}
+
+
+\usepackage{lipsum} % for dummy text
+\usepackage{enumitem}
+\setlist{nosep} % or \setlist{noitemsep} to leave space around whole list
+
+
+\usepackage{graphicx}
+\usepackage{adjustbox}
+\usepackage{caption}
+\usepackage{float}
+
+\pagestyle{plain}
+
+        
+
+\usepackage{booktabs, multirow} % for borders and merged ranges
+\usepackage{soul}% for underlines
+%\usepackage[table]{xcolor} % for cell colors
+\usepackage{changepage,threeparttable} % for wide tables
+\usepackage{longtable} % table for mutiple pages
+
+
+\usepackage{ctex}
+\usepackage{xeCJK}
+\xeCJKsetup{CJKmath=true}
+
+
+            \usepackage[
+                left=1.0in,
+                right=1.0in,
+                top=1.5in,
+                bottom=1.5in,
+            ]{geometry}
+        
+
+\setlength{\droptitle}{-18em}
+\title{\fontsize{40}{20} \textbf{\textcolor{red}{\kaishu Algorithm}}}
+\author{\textcolor{red}{南方小智}}
+\date{\textcolor{red}{\today}}
+
+
+
+\begin{document}
+
+\maketitle
+\thispagestyle{empty}
+\newpage
+
+\setcounter{page}{1}
+\tableofcontents
+\newpage
+
+\input{tables/table1.tex}
+
+\chapter{排序}
+
+
+
+
+
+\chapter{贪心}
+
+
+
+
+
+\chapter{搜索}
+
+
+
+
+
+
+\end{document}

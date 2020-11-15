@@ -6,6 +6,14 @@ all:
 	xelatex -output-directory log 趣题集.tex
 	open log/趣题集.pdf
 
+algo:
+	python3 create_book.py --path examples/Algorithm/ --name Algorithm --author 南方小智
+	@echo 'xelatex cmd support Chinese'
+	xelatex -output-directory log Algorithm.tex
+	@echo 'run twice to build toc correctly'
+	xelatex -output-directory log Algorithm.tex
+	open log/Algorithm.pdf
+
 readme:
 	python3 create_book.py --path README.md --name README --author 南方小智
 	@echo 'xelatex cmd support Chinese'
