@@ -141,13 +141,15 @@ $ -> \$   # $ 在Markdown中可用于开始数学表达式模式
 ```
 
 {{images/README/image0.dot}}[dot:测试dot]
+{{images/README/image2.dot}}[dot:蓝玫瑰]
 
 
 ### Markdown的解析和渲染
 该系统自带一个Markdown解析器，会将Markdown文本转化为一棵语法树。使用如下命令可以打印出本Readme文档的语法树：
 
 ```
-make test  # python3 test.py --path README.md
+# python3 test.py --path README.md
+make test
 ```
 
 Markdown语法树的解析遵循如图的树状结构。从最顶端的Document到最底端的Line，而inline部分的语法则较为简单，将由渲染器进行解析。

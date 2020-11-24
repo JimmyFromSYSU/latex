@@ -1,0 +1,71 @@
+digraph G {
+    rankdir = TD;
+    bgcolor=gray;
+    node                    [style=filled]; //  color=lightblue
+
+    white_0_0               [label="0\nrryyWwss", color="white"];
+    white_0_1               [label="0\nrryyWwss", color="white"];
+    purple_1_0              [label="1(25%)\nrryywwss", color="purple", fontcolor="white"];
+    purple_1_1              [label="1\nrryywwss", color="purple", fontcolor="white"];
+    yellow_0                [label="0\nrrYYWWss", color="yellow"];
+    white_1                 [label="1(100%)\nrrYyWwss", color="white"];
+    purple_2                [label="2(50%)\nrrYywwss\nrryywwss", color="purple", fontcolor="white"];
+    filtered_purple_2_0     [label="2*(50%)\nrrYywwss", color="purple", fontcolor="white"];
+    filtered_purple_2_1     [label="2*(50%)\nrrYywwss", color="purple", fontcolor="white"];
+    white_2_0               [label="2(25%)\nrrYYwwss", color="white"];
+
+    white_0_0               -> purple_1_0;
+    white_0_1               -> purple_1_0;
+
+    purple_1_0              -> purple_1_1               [style=dashed];
+    yellow_0                -> white_1;
+    purple_1_0              -> white_1;
+
+    white_1                 -> purple_2;
+    purple_1_1              -> purple_2;
+    purple_2                -> filtered_purple_2_0      [style=dashed, label="filter"];
+    purple_2                -> filtered_purple_2_1      [style=dashed, label="filter"];
+
+    filtered_purple_2_0 -> white_2_0;
+    filtered_purple_2_1 -> white_2_0;
+
+    white_2_1               [label="2\nrrYYwwss", color="white"];
+    white_2_2               [label="2\nrrYYwwss", color="white"];
+    red_0_0                 [label="0\nRRyyWWSs", color="red"];
+    red_0_1                 [label="0\nRRyyWWSs", color="red"];
+    black_1                 [label="1(25%)\nRRyyWWss", color="black", fontcolor="white"];
+    red_1                   [label="1(100%)\nRrYyWwss", color="red"];
+    orange_1                [label="1(12.5%)\nRrYYWwss", color="orange"];
+    red_2_0                 [label="2(25%)\nRrYYwwss", color="red"];
+    red_2_1                 [label="2(25%)\nRrYYwwss", color="red"];
+    blue_0                  [label="0(25%)\nRRYYwwss", color="blue", fontcolor="white"];
+
+    red_0_0                 -> black_1;
+    red_0_1                 -> black_1;
+
+    white_2_0               -> red_1;
+    black_1                 -> red_1;
+
+    white_2_0               -> white_2_1                [style=dashed];
+    white_2_1               -> orange_1;
+    red_1                   -> orange_1;
+
+    white_2_1               -> white_2_2                [style=dashed];
+    white_2_2               -> red_2_0;
+    white_2_2               -> red_2_1;
+    orange_1                -> red_2_0;
+    orange_1                -> red_2_1;
+    red_2_0                 -> blue_0;
+    red_2_1                 -> blue_0;
+
+    subgraph cluster_0 {
+        yellow_0_filter                [label="0\nrrYYWWss", color="yellow"];
+        purple_2_filter                [label="2*\nrrYywwss", color="purple", fontcolor="white"];
+        yellow_1                       [label="1(50%)\nrrYYWwss", color="yellow"];
+        yellow_0_filter         -> yellow_1;
+        purple_2_filter         -> yellow_1;
+
+        label                   =  "filter process"
+    }
+
+}

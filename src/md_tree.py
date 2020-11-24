@@ -334,6 +334,23 @@ class MDDocument(Element):
     def rm_comments(self):
         self.text = re.sub("(<!--.*?-->)", "", self.text, flags=re.DOTALL)
 
+    def _get_raw_sections(self):
+        lines = self.text.split('\n')
+        raw_sections = [lines[0]]
+        override = False
+        for i in range(1, len(lines)):
+            if lines[i].startswith('#'):
+                if override is False:
+                    raw_sections.append(lines[i])
+                else:
+                    raw_sections[-1] += '\n' + lines[i]
+            elif lines[i].startswith('```'):
+                override = not override
+                raw_sections[-1] += '\n' + lines[i]
+            else:
+                raw_sections[-1] += '\n' + lines[i]
+        return raw_sections
+
     def parse(self):
         # comments has highest priority to remove.
         self.rm_comments()
@@ -342,10 +359,12 @@ class MDDocument(Element):
         if self.text.startswith("#"):
             has_main = False
 
-        raw_sections = self.text.split("\n#")
-        self.sections.append(Section(raw_sections[0], self.level))
-        for raw_section in raw_sections[1:]:
-            raw_section = "#" + raw_section
+        raw_sections = self._get_raw_sections()
+        # raw_sections = self.text.split("\n#")
+        # self.sections.append(Section(raw_sections[0], self.level))
+        # for raw_section in raw_sections[1:]:
+        for raw_section in raw_sections:
+            # raw_section = "#" + raw_section
             self.sections.append(Section(raw_section, self.level))
         for section in self.sections:
             section.parse()
